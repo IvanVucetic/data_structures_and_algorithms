@@ -1,8 +1,10 @@
 # Unable to create a Binary search tree myself, I found an article
 # about it on the Internet. The entire code taken over from the web page:
+
 # http://www.laurentluce.com/posts/binary-search-tree-library-in-python/
-# I am not author of any of it, except for a few comments written as a 
-#reminder/help to myself. 
+
+# I am not author of any of it, except for small portions, 
+# and a few comments written as a reminder/help to myself. 
 # My idea was to try to figure the code out and learn from it as I read and type it over.
 
 class Node(object):
@@ -33,6 +35,8 @@ class Node(object):
                     self.right.insert(data)
         else:
             self.data = data
+
+
 
     def lookup(self, data, parent=None):
         """
@@ -164,7 +168,19 @@ class Node(object):
     # Generators and Yeald keyword - unfamiliar ground to me
     # Trying to figure it out:
 
-
+    def tree_data(self):
+        """Generator to get the tree nodes data"""
+        # we use a stack to traverse the tree in a non-recursive way
+        stack = []
+        node = self
+        while  stack or node:
+            if node:
+                stack.append(node)
+                node = node.left
+            else: # we are returning so we pop the node and e yield it
+                node = stack.pop
+                yield node.data #Attribute error???
+                node = node.right
 
 
 root = Node(8)
@@ -196,3 +212,6 @@ root2.insert(3)
 root2.insert(11)
 
 print root.compare_trees(root2)
+
+for data in root.tree_data():
+    print data
