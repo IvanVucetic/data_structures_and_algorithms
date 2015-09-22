@@ -35,8 +35,7 @@ class Node(object):
                     self.right.insert(data)
         else:
             self.data = data
-
-
+    
 
     def lookup(self, data, parent=None):
         """
@@ -132,6 +131,7 @@ class Node(object):
         """
         Print tree content in order.
         """
+        # this is depth-first: travels left, comes back to root, then goes right
         if self.left:
             self.left.print_tree()
         print self.data
@@ -168,19 +168,28 @@ class Node(object):
     # Generators and Yeald keyword - unfamiliar ground to me
     # Trying to figure it out:
 
-    def tree_data(self):
-        """Generator to get the tree nodes data"""
-        # we use a stack to traverse the tree in a non-recursive way
-        stack = []
-        node = self
-        while  stack or node:
-            if node:
-                stack.append(node)
-                node = node.left
-            else: # we are returning so we pop the node and e yield it
-                node = stack.pop
-                yield node.data #Attribute error???
-                node = node.right
+    # def tree_data(self):
+    #     """Generator to get the tree nodes data"""
+    #     # we use a stack to traverse the tree in a non-recursive way
+    #     stack = []
+    #     node = self
+    #     while  stack or node:
+    #         if node:
+    #             stack.append(node)
+    #             node = node.left
+    #         else: # we are returning so we pop the node and e yield it
+    #             node = stack.pop
+    #             yield node.data #Attribute error???
+    #             node = node.right
+
+
+# build_tree turns a list into a tree; part of the Odin Project
+def build_tree(arry):
+    """Turns a list of integers into a tree."""
+    root = Node(arry[0])
+    for i in range(1, len(arry)):
+        root.insert(arry[i])
+    return root
 
 
 root = Node(8)
@@ -213,5 +222,17 @@ root2.insert(11)
 
 print root.compare_trees(root2)
 
-for data in root.tree_data():
-    print data
+# for data in root.tree_data():
+#     print data
+
+li = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+root3 = build_tree(li)
+root3.print_tree()
+
+
+# LEFT UNDONE:
+#   1, breath-first search
+#   2. depth-first search using stack
+# ovo je obavezno jer je potrebno za knight's travail
+# provezbati- mozda prvo 
+# http://interactivepython.org/runestone/static/pythonds/index.html#graphs-and-graph-algorithms
