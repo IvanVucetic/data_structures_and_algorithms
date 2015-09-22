@@ -49,6 +49,74 @@ class Node(object):
         else:
             return self, parent
 
+    def children_count(self):
+        """
+        Returns the number of children
+        @returns number 0, 1 or 2
+        """
+        cnt = 0
+        if self.left:
+            cnt += 1
+        if self.right:
+            cnt += 1
+        return cnt
+
+    def delete(self, data):
+        """
+        Delete node containing data
+        @param data: node's content to delete
+        """
+        # get node containing data
+        node, parent = self.lookup(data)
+        if node is not None:
+            children_count = node.children_count()
+
+        # if node has no children, just remove it
+        if children_count == 0:
+            if parent: #if parent exists, ie node is not root
+                if parent.left is node:
+                    parent.left = None
+                else:
+                    parent.right = None
+                del node
+            else:
+                self.data = None # if it's root, just delete it
+        
+        # if node has 1 child, replace it with its child
+        elif children_count == 1:
+            if node.left:
+                n = node.left
+            else:
+                n = node.right
+            if parent:
+                if parent.left is node:
+                    parent.left = n
+                else:
+                    parent.right = n
+                del node
+            # special case hen the node is the root of the tree
+            else:
+                self.left = n.left
+                self.right = n.right
+                self.data = n.data
+
+        # if node has 2 children
+        else:
+            # find its successor
+            parent = node
+            successor = node.right
+            while  successor.left:
+                parent = successor
+                successor = successor.left
+            # replace node data by its successor data
+            node.data = successor.data
+            # fix successor's parent's child
+            if parent.left = successor:
+                parent.left = successor.right
+            else:
+                parent.right = successor.right
+
+
 
 root = Node(8)
 print root
@@ -65,5 +133,9 @@ root.insert(13)
 
 print root.left.right.data
 
-node, parent = root.lookup(6)
+node, parent = root.lookup(13)
+print node.data, parent.data
+
+root.delete(14)
+node, parent = root.lookup(13)
 print node.data, parent.data
