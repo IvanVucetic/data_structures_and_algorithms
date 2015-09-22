@@ -111,16 +111,26 @@ class Node(object):
             # replace node data by its successor data
             node.data = successor.data
             # fix successor's parent's child
-            if parent.left = successor:
+            if parent.left == successor:
                 parent.left = successor.right
             else:
                 parent.right = successor.right
 
+    def print_tree(self):
+        """
+        Print tree content in order.
+        """
+        if self.left:
+            self.left.print_tree()
+        print self.data
+        if self.right:
+            self.right.print_tree()
+
 
 
 root = Node(8)
-print root
-print root.data
+# print root
+# print root.data
 
 root.insert(3)
 root.insert(10)
@@ -131,11 +141,13 @@ root.insert(7)
 root.insert(14)
 root.insert(13)
 
-print root.left.right.data
+# print root.left.right.data
 
-node, parent = root.lookup(13)
-print node.data, parent.data
+# node, parent = root.lookup(13)
+# print node.data, parent.data
 
-root.delete(14)
-node, parent = root.lookup(13)
-print node.data, parent.data
+# root.delete(14)
+# node, parent = root.lookup(13)
+# print node.data, parent.data
+
+root.print_tree()
