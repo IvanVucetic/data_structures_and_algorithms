@@ -29,6 +29,25 @@ class Node(object):
         else:
             self.data = data
 
+    def lookup(self, data, parent=None):
+        """
+        Lookup node containing data
+        @param data: data of the node object to look up
+        @param parent: node's parent
+        @returns node and node's parent if found or None, None
+        """
+        if data < self.data:
+            if self.left is None:
+                return None, None
+            else:
+                return self.left.lookup(data, self)
+        elif data > self.data:
+            if self.right is None:
+                return None, None
+            else:
+                return self.right.lookup(data, self)
+        else:
+            return self, parent
 
 
 root = Node(8)
@@ -45,3 +64,6 @@ root.insert(14)
 root.insert(13)
 
 print root.left.right.data
+
+node, parent = root.lookup(6)
+print node.data, parent.data
