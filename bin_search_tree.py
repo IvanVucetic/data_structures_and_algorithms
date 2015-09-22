@@ -1,4 +1,9 @@
+# Unable to create a Binary search tree myself, I found an article
+# about it on the Internet. The entire code taken over from the web page:
 # http://www.laurentluce.com/posts/binary-search-tree-library-in-python/
+# I am not author of any of it, except for a few comments written as a 
+#reminder/help to myself. 
+# My idea was to try to figure the code out and learn from it as I read and type it over.
 
 class Node(object):
     """
@@ -32,6 +37,7 @@ class Node(object):
     def lookup(self, data, parent=None):
         """
         Lookup node containing data
+        
         @param data: data of the node object to look up
         @param parent: node's parent
         @returns node and node's parent if found or None, None
@@ -52,6 +58,7 @@ class Node(object):
     def children_count(self):
         """
         Returns the number of children
+        
         @returns number 0, 1 or 2
         """
         cnt = 0
@@ -64,6 +71,7 @@ class Node(object):
     def delete(self, data):
         """
         Delete node containing data
+        
         @param data: node's content to delete
         """
         # get node containing data
@@ -126,6 +134,37 @@ class Node(object):
         if self.right:
             self.right.print_tree()
 
+    def compare_trees(self, node):
+        """
+        Compare 2 trees
+
+        @param node: tree's root node to compare to
+        @returns True if the tree passed is identical to this tree
+        """
+        if node is None:
+            return False
+        if self.data != node.data:
+            return False
+        res = True
+        if self.left is None:
+            if node.left: # ...is true (exists)
+                return False
+        else:
+            res = self.left.compare_trees(node.left)
+            if res is False:
+                return False
+        if self.right is None:
+            if node.right:
+                return False
+        else:
+            res = self.right.compare_trees(node.right)
+            return res
+
+    # Generator returning the tree elements one by one
+    # Generators and Yeald keyword - unfamiliar ground to me
+    # Trying to figure it out:
+
+
 
 
 root = Node(8)
@@ -134,12 +173,12 @@ root = Node(8)
 
 root.insert(3)
 root.insert(10)
-root.insert(1)
-root.insert(6)
-root.insert(4)
-root.insert(7)
-root.insert(14)
-root.insert(13)
+# root.insert(1)
+# root.insert(6)
+# root.insert(4)
+# root.insert(7)
+# root.insert(14)
+# root.insert(13)
 
 # print root.left.right.data
 
@@ -151,3 +190,9 @@ root.insert(13)
 # print node.data, parent.data
 
 root.print_tree()
+
+root2 = Node(8)
+root2.insert(3)
+root2.insert(11)
+
+print root.compare_trees(root2)
